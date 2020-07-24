@@ -1,0 +1,24 @@
+{
+  "name": "card-memory-react",
+  "version": "1.0.0",
+  "description": "a simple card memory game element for reactjs",
+  "main": "Game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaanasArora/card-memory-react.git"
+  },
+  "keywords": [
+    "game",
+    "card",
+    "reactjs"
+  ],
+  "author": "Maanas Arora <maanasarora23@gmail.com> (http://github.com/MaanasArora)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaanasArora/card-memory-react/issues"
+  },
+  "homepage": "https://github.com/MaanasArora/card-memory-react#readme"
+}
