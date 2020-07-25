@@ -1,54 +1,66 @@
 import React from "react";
+import "./styles.css";
 
-let colors = ["red", "green", "yellow", "pink", "black"];
-let number = 36;
-let unselectedConstant = -1;
+const choice = (choices) => choices[Math.floor(Math.random() * choices.length)];
 
-let gameSide = 400;
-let cardMargin = 3;
-let cardSide =
-  (100 / Math.sqrt(number) - 2 * (cardMargin / gameSide) * 100).toString() +
-  "%";
+const generateSeq = (choices, length) =>
+  [...Array(length)].map((i) => choice(choices));
 
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
 
+    let colors = this.props.colors;
+    let number = this.props.number;
+
     this.state = {
-      colors: chooseArray(colors, number),
-      selected: unselectedConstant,
+      colors: generateSeq(colors, number),
+      isSelected: false,
+      lastSelected: 0,
       solved: [],
     };
 
-    this.handleCard = this.handleCard.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.areSameColor = this.areSameColor.bind(this);
   }
 
-  handleCard(index) {
-    if (this.state.selected === unselectedConstant) {
-      this.setState({ selected: index });
-    } else if (
-      this.state.colors[this.state.selected] === this.state.colors[index]
+  areSameColor(first, second) {
+    return this.state.colors[first] == this.state.colors[second];
+  }
+
+  handleClick(cardIndex) {
+    if (
+      this.state.isSelected &&
+      this.areSameColor(this.state.lastSelected, cardIndex)
     ) {
       this.setState((prevState) => ({
-        solved: prevState.solved.concat([this.state.selected, index]),
+        solved: prevState.solved.concat([prevState.lastSelected, cardIndex]),
       }));
-      this.setState({ selected: unselectedConstant });
-    } else {
-      this.setState({ selected: unselectedConstant });
     }
+
+    this.setState((prevState) => ({
+      isSelected: !prevState.isSelected,
+      lastSelected: cardIndex,
+    }));
   }
 
   render() {
     return (
-      <div className="game" style={{ height: gameSide, width: gameSide }}>
+      <div
+        className="game"
+        style={{ height: this.props.size, width: this.props.size }}
+      >
         {this.state.colors.map((color, index) => (
           <Card
+            color={color}
             key={index}
             index={index}
-            color={color}
-            selected={this.state.selected === index}
-            solved={this.state.solved.includes(index)}
-            handleCard={this.handleCard}
+            size={this.props.size / Math.sqrt(this.props.number)}
+            shown={
+              this.state.solved.includes(index) ||
+              (this.state.isSelected && this.state.lastSelected == index)
+            }
+            handleClick={this.handleClick}
           />
         ))}
       </div>
@@ -68,39 +80,27 @@ class Card extends React.Component {
     this.setState({ tapped: true });
     setTimeout(() => {
       this.setState({ tapped: false });
-      this.props.handleCard(this.props.index);
+      this.props.handleClick(this.props.index);
     }, 1500);
   }
 
   render() {
+    let marginCoeff = 0.07;
+
+    let size = this.props.size * (1 - 2*marginCoeff);
+    let margin = this.props.size * marginCoeff;
+
     return (
       <div
-        className="card"
-        style={{
-          background:
-            this.props.solved || this.props.selected || this.state.tapped
-              ? this.props.color
-              : "lightblue",
-          width: cardSide,
-          height: cardSide,
-          margin: cardMargin,
-          border: this.state.tapped ? '5px skyblue solid' : ''
-        }}
+        className={this.state.tapped ? "tappedCard" : "card"}
         onClick={this.startFlip}
+        style={{
+          width: size,
+          height: size,
+          margin: margin,
+          background: this.props.shown || this.state.tapped ? this.props.color : "lightblue",
+        }}
       />
     );
   }
-}
-
-function chooseArray(choices, length) {
-  let array = [];
-  for (let i = 0; i < length; i++) {
-    array.push(choose(choices));
-  }
-  return array;
-}
-
-function choose(choices) {
-  let index = Math.floor(Math.random() * choices.length);
-  return choices[index];
 }
