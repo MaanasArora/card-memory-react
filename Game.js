@@ -87,7 +87,7 @@ class Card extends React.Component {
   render() {
     let marginCoeff = 0.07;
 
-    let size = this.props.size * (1 - 2*marginCoeff);
+    let size = this.props.size * (1 - 2 * marginCoeff);
     let margin = this.props.size * marginCoeff;
 
     return (
@@ -98,7 +98,10 @@ class Card extends React.Component {
           width: size,
           height: size,
           margin: margin,
-          background: this.props.shown || this.state.tapped ? this.props.color : "lightblue",
+          background:
+            this.props.shown || this.state.tapped
+              ? this.props.color
+              : "lightblue",
         }}
       />
     );
