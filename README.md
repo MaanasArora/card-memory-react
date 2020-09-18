@@ -1,28 +1,30 @@
-# Card Memory - React
+# card-memory-react
 
-A simple card memory game element in React.
+> Made with create-react-library
 
-## Installation
+[![NPM](https://img.shields.io/npm/v/card-memory-react.svg)](https://www.npmjs.com/package/card-memory-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Use npm:
+## Install
 
+```bash
+npm install --save card-memory-react
 ```
-npm install card-memory-react
-```
 
-## Using
-
-Import `Game` and inject `<Game />` with the following props:
-
-- `size`: the height and width
-- `colors`: an array of the colors to be used for the cards
-- `number`: the number of cards to be used, a perfect square (the game is always square currently)
-
-## Example
+## Usage
 
 ```jsx
-import Game from 'card-memory-react';
+import React, { Component } from 'react'
 
-const App = () =>
-    <Game size={49} colors={['red', 'yellow', 'pink', 'blue'] number={49} />
+import MyComponent from 'card-memory-react'
+import 'card-memory-react/dist/index.css'
+
+class Example extends Component {
+  render() {
+    return <MyComponent />
+  }
+}
 ```
+
+## License
+
+Apache © [MaanasArora](https://github.com/MaanasArora)
