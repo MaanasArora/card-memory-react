@@ -1,14 +1,12 @@
 import React from 'react'
-import './styles.css'
-
-import Card from 'components/Card'
+import styles from './styles.css'
 
 const choice = (choices) => choices[Math.floor(Math.random() * choices.length)]
 
 const generateSeq = (choices, length) =>
   [...Array(length)].map((i) => choice(choices))
 
-export default class CardMemoryGame extends React.Component {
+export class CardMemoryGame extends React.Component {
   constructor(props) {
     super(props)
 
@@ -49,7 +47,7 @@ export default class CardMemoryGame extends React.Component {
   render() {
     return (
       <div
-        className='game'
+        className={styles.game}
         style={{ height: this.props.size, width: this.props.size }}
       >
         {this.state.colors.map((color, index) => (
@@ -66,6 +64,46 @@ export default class CardMemoryGame extends React.Component {
           />
         ))}
       </div>
+    )
+  }
+}
+
+class Card extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { tapped: false }
+
+    this.startFlip = this.startFlip.bind(this)
+  }
+
+  startFlip() {
+    this.setState({ tapped: true })
+    setTimeout(() => {
+      this.setState({ tapped: false })
+      this.props.handleClick(this.props.index)
+    }, 1500)
+  }
+
+  render() {
+    let marginCoeff = 0.07
+
+    let size = this.props.size * (1 - 2 * marginCoeff)
+    let margin = this.props.size * marginCoeff
+
+    return (
+      <div
+        className={this.state.tapped ? styles.tappedCard : styles.card}
+        onClick={this.startFlip}
+        style={{
+          width: size,
+          height: size,
+          margin: margin,
+          background:
+            this.props.shown || this.state.tapped
+              ? this.props.color
+              : 'lightblue'
+        }}
+      />
     )
   }
 }

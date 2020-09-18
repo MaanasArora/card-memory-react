@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { ExampleComponent } from 'card-memory-react'
+import { CardMemoryGame } from 'card-memory-react'
 import 'card-memory-react/dist/index.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return <CardMemoryGame size={360} colors={['red', 'yellow', 'pink', 'blue']} number={49} />
 }
 
 export default App

@@ -12,6 +12,12 @@ npm install --save card-memory-react
 
 ## Usage
 
+Use the following props:
+
+- `size` in pixels
+- `colors` as an array of HTML color strings
+- `number` as a square number
+
 ```jsx
 import React, { Component } from 'react'
 
@@ -20,11 +26,14 @@ import 'card-memory-react/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <Game
+    size={100}
+    colors={['red', 'yellow', 'pink', 'blue']}
+    number={49} />
   }
 }
 ```
 
 ## License
 
-Apache © [MaanasArora](https://github.com/MaanasArora)
+Apache License © [MaanasArora](https://github.com/MaanasArora)
